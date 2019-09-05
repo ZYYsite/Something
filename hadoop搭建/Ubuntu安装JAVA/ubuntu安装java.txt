@@ -1,0 +1,4 @@
+http://dblab.xmu.edu.cn/blog/linux-environment-variable/
+网址：http://www.cnblogs.com/a2211009/p/4265225.html
+按照本网址的第二种方法一步步的做，最终成功安装并显示其版本。（注意修改版本及路径！）
+下载了jdk1.8.0_112 Linux64位的jdk在本文件夹中。

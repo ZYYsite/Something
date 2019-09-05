@@ -1,0 +1,52 @@
+﻿sudo modprobe -r iwlwifi mac80211
+sudo modprobe iwlwifi connector_log=0x1
+sudo stop network-manager
+iw dev wlan0 link
+sudo ip link set wlan0 up
+sudo iw dev wlan0 connect cugjsj432-3a
+sudo dhclient wlan0
+
+//make -C linux-80211n-csitool-supplementary/netlink
+sudo linux-80211n-csitool-supplementary/netlink/log_to_file csi.dat
+
+
+can not connecte the wifi
+for file in /lib/firmware/iwlwifi-5000-*.ucode; do sudo mv $file $file.orig; done 
+sudo cp linux-80211n-csitool-supplementary/firmware/iwlwifi-5000-2.ucode.sigcomm2010 /lib/firmware
+sudo ln -s iwlwifi-5000-2.ucode.sigcomm2010 /lb/firmware/iwlwifi-5000-2.ucode
+
+
+
+//matlab 画图部分
+cd linux-80211n-csitool-supplementary/matlab
+
+csi_trace = read_bf_file('csi.dat');
+
+csi_entry = csi_trace{1}
+
+csi = get_scaled_csi(csi_entry);
+
+plot(db(abs(squeeze(csi).')))
+
+//plot(ifft(db(get_eff_SNRs(csi),'pow')))
+
+//plot(ifft(db(abs(squeeze(csi).'))))
+legend('RX Antenna A', 'RX Antenna B', 'RX Antenna C', 'Location', 'SouthEast' );
+
+xlabel('Subcarrier index');
+
+ ylabel('SNR [dB]');
+
+ db(get_eff_SNRs(csi), 'pow')
+
+question:
+有一些软件包无法被安装。如果您用的是 unstable 发行版，这也许是
+因为系统无法达到您要求的状态造成的。该版本中可能会有一些您需要的软件
+包尚未被创建或是它们已被从新到(Incoming)目录移出。
+下列信息可能会对解决问题有所帮助：
+
+下列软件包有未满足的依赖关系：
+ vim : 依赖: vim-common (= 2:7.3.035+hg~8fdc12103333-1ubuntu7) 但是 2:7.4.052-1ubuntu3 正要被安装
+E: 无法修正错误，因为您要求某些软件包保持现状，就是它们破坏了软件包间的依赖关系
+answer:sudo apt-get install emacsen-common
+	
